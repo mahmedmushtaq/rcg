@@ -3,7 +3,7 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 //@ts-ignore
 import reactElementToJSXString from "react-element-to-jsx-string";
-import { generalTemplate } from "../../template/RenderTemplate";
+import { editorTemplate } from "../../template/EditorTemplate";
 import React, { useEffect, useState } from "react";
 
 interface PropsType {
@@ -31,7 +31,7 @@ const Editor = (props: PropsType) => {
         showGutter
         onChange={onChange}
         name="UNIQUE_ID_OF_DIV"
-        value={generalTemplate(code)}
+        value={editorTemplate(code)}
         editorProps={{ $blockScrolling: true }}
       />
     </div>

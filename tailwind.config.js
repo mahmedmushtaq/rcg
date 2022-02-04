@@ -1,7 +1,36 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        height: "height",
+      },
+    },
+    fontFamily: {
+      gilroyBold: ["gilroy-bold"],
+      gilroy: ["gilroy"],
+      p: ["montserrat-regular"],
+      montserratRegular: ["montserrat-regular"],
+    },
+
+    colors: {
+      // l stands for light theme, d stands for dark theme
+      transparent: "transparent",
+      current: "currentColor",
+      lprimary: "#003060",
+      lsecondary: "#055C9D",
+      error: "#e76f51",
+      ltext: "black",
+      lbg: "white",
+      lsbg: "#e6e9ec", //light silver bg
+    },
+    screens: {
+      xs: "320px",
+      xl3: "2500px",
+      ...defaultTheme.screens,
+    },
   },
   plugins: [],
 };
