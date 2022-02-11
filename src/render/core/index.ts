@@ -11,6 +11,9 @@ export const renderComponent: (config: renderType) => React.ReactElement = (
       key: config.id,
       className: config.className,
       style: config.style,
+      onClick: () => {
+        console.log(" ====== click on me ======== ", config.id);
+      },
     },
     config.children
       ? typeof config.children === "string"

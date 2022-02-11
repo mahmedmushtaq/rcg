@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import useToAddElementOnWebsite from "../../render/hooks/useToAddElementOnWebsite";
+import { useSetRecoilState } from "recoil";
+import { webState as addElementToWebState } from "../../recoil";
 import { ToolItem, tools } from "../Tools";
 
 const useSideBar = () => {
   const [allTools, setAllTools] = useState<ToolItem[]>([]);
   const [searchTool, setSearchTool] = useState("");
-  const { webState, addElementToWebState } = useToAddElementOnWebsite();
+  const addElement = useSetRecoilState(addElementToWebState);
 
   useEffect(() => {
     if (!searchTool) {
@@ -21,7 +22,7 @@ const useSideBar = () => {
   }, [searchTool]);
 
   const onSelectTool = (tool: ToolItem) => {
-    addElementToWebState(tool.element);
+    addElement(tool.element);
   };
 
   return { allTools, searchTool, setSearchTool, onSelectTool };

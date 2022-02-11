@@ -6,6 +6,7 @@ interface renderPropType {
 }
 
 const Render = (props: renderPropType) => {
+  
   return <div>{renderComponent(props.config)}</div>;
 };
 
