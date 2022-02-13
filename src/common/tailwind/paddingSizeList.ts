@@ -175,8 +175,8 @@ const paddingBottom = [
 
 export const paddingSizeLists = [
   // { id: 1, list: paddingSizeList },
-  { id: 2, list: paddingLeft, heading: "Left" },
-  { id: 3, list: paddingRight, heading: "Right" },
-  { id: 4, list: paddingBottom, heading: "Bottom" },
-  { id: 5, list: paddingTop, heading: "Top" },
+  { id: "pr-left", list: paddingLeft, heading: "Left" },
+  { id: "pr-right", list: paddingRight, heading: "Right" },
+  { id: "pr-bottom", list: paddingBottom, heading: "Bottom" },
+  { id: "pr-top", list: paddingTop, heading: "Top" },
 ];

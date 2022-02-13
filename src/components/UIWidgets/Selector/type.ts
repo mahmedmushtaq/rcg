@@ -19,5 +19,5 @@ export interface SelectorPropsType extends commonType {
 
 export interface GenericSelectorPropsType extends commonType {
   listHeading?: string;
-  lists?: { id: string | number; list: listType[]; heading?: string }[];
+  lists?: { id: string; list: listType[]; heading?: string }[];
 }

@@ -32,6 +32,8 @@ const ShowStyleSelector = () => {
       ""
     );
 
+    console.log("finalClassName is ", finalClassNameString);
+
     const ref = selectedEl[selectedItem.id];
     ref.className = finalClassNameString;
   }, [selectedValues]);

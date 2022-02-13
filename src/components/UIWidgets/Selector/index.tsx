@@ -16,8 +16,9 @@ const GenericSelector = (props: GenericSelectorPropsType) => {
             <div className="grid grid-cols-2 gap-4">
               {props.lists?.map((list, index) => (
                 <Selector
-                  key={index}
                   {...props}
+                  key={index}
+                  id={list.id}
                   list={list.list}
                   smallHeading
                   heading={list.heading}
