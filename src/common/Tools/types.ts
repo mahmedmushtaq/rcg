@@ -1,11 +1,13 @@
+import React from "react";
 import { Icon } from "react-feather";
-import { renderType } from "../../render/types";
+import { elementType } from "../../render/types";
 
 type customIconType = () => JSX.Element;
 
 export interface ToolItem {
-  id: string | number;
   icon: customIconType | Icon;
   heading: string;
-  element: renderType;
+  element: elementType;
 }
+
+export type elementRefType<T> = T;

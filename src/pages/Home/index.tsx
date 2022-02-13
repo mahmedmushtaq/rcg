@@ -1,7 +1,22 @@
 import Website from "../Website";
-import { SideBar } from "../../components";
+import { ShowTools } from "../../components";
+import { useRecoilValue } from "recoil";
+import { selectedElementState } from "../../recoil";
+import SelectedItemStyle from "../../components/SelectedItemStyle";
+import { elementList } from "../../render/core";
+import { useEffect } from "react";
 
 function Home() {
+  const selectedItem = useRecoilValue(selectedElementState);
+
+  useEffect(() => {
+    if (selectedItem) {
+      console.log(selectedItem);
+    }
+  });
+
+  console.log("selectedItem is ", selectedItem);
+
   return (
     <div className="App">
       <div className="flex">
@@ -9,7 +24,7 @@ function Home() {
           className="min-h-screen overflow-hidden relative"
           style={{ maxHeight: "100vh", width: 300 }}
         >
-          <SideBar />
+          {!selectedItem ? <ShowTools /> : <SelectedItemStyle />}
         </div>
         <div style={{ width: "calc(100vw - 300px)" }}>
           <Website />

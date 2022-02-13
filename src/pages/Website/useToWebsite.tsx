@@ -1,10 +1,10 @@
 import { useRecoilValue } from "recoil";
-import { webState as completeWebState, elementedState } from "../../recoil";
+import { webState as completeWebState } from "../../recoil";
 
 const useToWebsite = () => {
   const allElements = useRecoilValue(completeWebState);
-  const selectedElement = useRecoilValue(elementedState);
-  return { allElements, selectedElement };
+
+  return { allElements };
 };
 
 export default useToWebsite;

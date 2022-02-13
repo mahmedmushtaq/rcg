@@ -1,4 +1,4 @@
-import { renderType } from "../render/types";
+import { elementType } from "../render/types";
 
 const defaultWebState = {
   component: "div",
@@ -8,8 +8,8 @@ const defaultWebState = {
 };
 
 export const addNewElementToWebState = (
-  webState: renderType,
-  element: renderType
+  webState: elementType,
+  element: elementType
 ) => {
   // const localWebState =
   //   localStorage.getItem("websiteState") || JSON.stringify(defaultWebState);
@@ -17,7 +17,7 @@ export const addNewElementToWebState = (
   // const webState = JSON.parse(localWebState);
   const allElementsMap = { ...webState };
   const { children } = allElementsMap;
-  type unionType = renderType | string;
+  type unionType = elementType | string;
   if (children) {
     let childArray: unionType[] = [];
     if (!Array.isArray(children)) {

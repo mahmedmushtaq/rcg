@@ -1,16 +1,16 @@
 import { FileText } from "react-feather";
-import { ToolItem } from "..";
-import { renderType } from "../../../render/types";
+import { ToolItem } from "../../common/Tools/types";
+import { elementType } from "../../render/types";
 
-const paragraph: renderType = {
+const paragraph: elementType = {
   component: "p",
   className: "",
   style: {},
+  id: "add-paragraph",
   children: "Write something here....",
 };
 
 const Paragraph: ToolItem = {
-  id: "add-paragraph",
   icon: FileText,
   heading: "Paragraph",
   element: paragraph,

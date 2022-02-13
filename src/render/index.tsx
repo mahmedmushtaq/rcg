@@ -1,8 +1,8 @@
 import { renderComponent } from "./core";
-import { renderType } from "./types";
+import { elementType } from "./types";
 
 interface renderPropType {
-  config: renderType;
+  config: elementType;
 }
 
 const Render = (props: renderPropType) => {

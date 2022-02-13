@@ -3,7 +3,7 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 //@ts-ignore
 import reactElementToJSXString from "react-element-to-jsx-string";
-import { editorTemplate } from "../../template/EditorTemplate";
+import { editorTemplate } from "../../../template/EditorTemplate";
 import React, { useEffect, useState } from "react";
 
 interface PropsType {

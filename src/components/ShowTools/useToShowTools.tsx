@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { webState as addElementToWebState } from "../../recoil";
-import { ToolItem, tools } from "../Tools";
+import useToGenerateElement from "../../render/hooks/useToGenerateElement";
+import { ToolItem, tools } from "../../common/Tools";
 
-const useSideBar = () => {
+const useToShowTools = () => {
   const [allTools, setAllTools] = useState<ToolItem[]>([]);
   const [searchTool, setSearchTool] = useState("");
-  const addElement = useSetRecoilState(addElementToWebState);
-
+  const { setSelectedElement, onSelectTool, addElementRef } =
+    useToGenerateElement();
   useEffect(() => {
     if (!searchTool) {
       setAllTools(tools);
       return;
     }
 
+    // show only searched tool
     const selectedTool = allTools.filter((tool) =>
       tool.heading.toLowerCase().includes(searchTool.toLowerCase())
     );
@@ -21,11 +23,14 @@ const useSideBar = () => {
     setAllTools(selectedTool);
   }, [searchTool]);
 
-  const onSelectTool = (tool: ToolItem) => {
-    addElement(tool.element);
+  return {
+    allTools,
+    searchTool,
+    setSearchTool,
+    onSelectTool,
+    setSelectedElement,
+    addElementRef,
   };
-
-  return { allTools, searchTool, setSearchTool, onSelectTool };
 };
 
-export default useSideBar;
+export default useToShowTools;
