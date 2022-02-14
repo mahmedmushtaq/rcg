@@ -1,6 +1,6 @@
 import React, { createRef, useRef } from "react";
 import { Icon } from "react-feather";
-import { elementType } from "../../../render/types";
+import { renderElementType } from "../../../render/types";
 import { elementRefType, ToolItem } from "../../../common/Tools";
 import { P } from "../../UIWidgets";
 import { generateElementUniqueId } from "../../../common/helpers";
@@ -8,7 +8,7 @@ import { generateElementUniqueId } from "../../../common/helpers";
 interface PropType {
   tool: ToolItem;
   onSelected: (prop: ToolItem) => void;
-  setSelectedElement: (prop: elementType) => void;
+  setSelectedElement: (prop: renderElementType) => void;
   addElementRef: (id: any, el: elementRefType<HTMLElement>) => void;
 }
 
@@ -18,7 +18,7 @@ const Item = ({
   setSelectedElement,
   addElementRef,
 }: PropType) => {
-  const itemSelected = (el: elementType) => () => {
+  const itemSelected = (el: renderElementType) => () => {
     setSelectedElement(el);
   };
 

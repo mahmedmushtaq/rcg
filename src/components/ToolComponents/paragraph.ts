@@ -1,8 +1,8 @@
 import { FileText } from "react-feather";
 import { ToolItem } from "../../common/Tools/types";
-import { elementType } from "../../render/types";
+import { renderElementType } from "../../render/types";
 
-const paragraph: elementType = {
+const paragraph: renderElementType = {
   component: "p",
   className: "",
   style: {},

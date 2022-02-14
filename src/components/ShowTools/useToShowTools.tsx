@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { webState as addElementToWebState } from "../../recoil";
 import useToGenerateElement from "../../render/hooks/useToGenerateElement";
 import { ToolItem, tools } from "../../common/Tools";
 

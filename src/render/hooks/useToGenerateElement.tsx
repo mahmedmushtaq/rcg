@@ -1,27 +1,26 @@
 import React, { createRef, useRef } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { addNewElementToWebState } from "../../common/helpers";
 import { elementRefType, ToolItem } from "../../common/Tools";
 import {
-  webState,
+  websiteState,
   selectedElementState as elementedState,
   elementRefs,
 } from "../../recoil";
-import { elementType } from "../types";
-
-const useToGetRef = () => {
-  return { ref: useRef() };
-};
+import { renderElementType } from "../types";
 
 const useToGenerateElement = () => {
   const setSelectedElement = useSetRecoilState(elementedState);
   const [allElementRefs, setElementsRef] = useRecoilState(elementRefs);
-  const addElement = useSetRecoilState(webState);
+  const [webState, setWebState] = useRecoilState(websiteState);
 
   const onSelectTool = (tool: ToolItem) => {
-    addElement(tool.element);
+    const completeWebState = addNewElementToWebState(webState, tool.element);
+    setWebState(completeWebState);
+    //addElement(tool.element);
   };
 
-  const elementorSelector = (element: elementType) => {
+  const elementorSelector = (element: renderElementType) => {
     setSelectedElement(element);
   };
 

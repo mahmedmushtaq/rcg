@@ -1,8 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { webState as completeWebState } from "../../recoil";
+import { websiteState } from "../../recoil";
 
 const useToWebsite = () => {
-  const allElements = useRecoilValue(completeWebState);
+  const allElements = useRecoilValue(websiteState);
 
   return { allElements };
 };

@@ -23,7 +23,7 @@ const Selector = ({
           onChangeValue(e.target.value);
         }
       }}
-      value={value}
+      value={value || ""}
       className="mt-1 p-2 flex-1"
     >
       <option value="">Select Option</option>

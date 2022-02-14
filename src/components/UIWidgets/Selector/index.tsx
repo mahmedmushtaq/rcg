@@ -9,7 +9,7 @@ const GenericSelector = (props: GenericSelectorPropsType) => {
   return (
     <div>
       {!props.lists ? (
-        <Selector {...props} />
+        <Selector {...props} value={props.value ? props.value[props.id] : ""} />
       ) : (
         <div className="mt-2">
           <AccordionWidget heading={props.listHeading}>
@@ -21,6 +21,7 @@ const GenericSelector = (props: GenericSelectorPropsType) => {
                   id={list.id}
                   list={list.list}
                   smallHeading
+                  value={props.value ? props.value[list.id] : ""}
                   heading={list.heading}
                   noAccordion
                 />

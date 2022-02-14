@@ -1,26 +1,22 @@
 import { atom, selector } from "recoil";
-import { elementType } from "../render/types";
-import { addNewElementToWebState } from "./helper";
+import { webStateType } from "../common/types";
+import { renderElementType } from "../render/types";
 
-const websiteState = atom<elementType>({
+export const websiteState = atom<webStateType>({
   key: "webState", // unique ID (with respect to other atoms/selectors)
   default: {
-    component: "div",
-    className: "",
-    style: {},
-    children: "",
-    id: "default-div",
+    default: {
+      component: "div",
+      id: "default",
+    },
   }, // default value (aka initial value)
 });
 
-export const webState = selector<elementType>({
-  key: "completeWebState",
-  get: ({ get }) => get(websiteState),
-  set: ({ set, get }, newElement) => {
-    const webState = get(websiteState);
-    set(
-      websiteState,
-      addNewElementToWebState(webState, newElement as elementType)
-    );
-  },
-});
+// export const webState = selector<webStateType>({
+//   key: "completeWebState",
+//   get: ({ get }) => get(websiteState),
+//   // set: ({ set, get }, newElement) => {
+//   //   const webState = get(websiteState);
+//   //   set(websiteState, addNewElementToWebState(webState, newElement as renderElementType));
+//   // },
+// });

@@ -6,7 +6,6 @@ interface listType {
 interface commonType {
   id: string;
   list?: listType[];
-  value?: string;
   heading?: string;
   onChange?: (id: string, e: React.ChangeEvent<HTMLSelectElement>) => void;
   onChangeValue?: (val: string) => void;
@@ -15,9 +14,11 @@ interface commonType {
 export interface SelectorPropsType extends commonType {
   smallHeading?: boolean;
   noAccordion?: boolean;
+  value?: string;
 }
 
 export interface GenericSelectorPropsType extends commonType {
   listHeading?: string;
+  value?: { [key: string]: string };
   lists?: { id: string; list: listType[]; heading?: string }[];
 }

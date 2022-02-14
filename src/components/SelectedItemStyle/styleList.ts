@@ -2,7 +2,7 @@ import { paddingSizeLists, textSizeList } from "../../common/tailwind";
 
 export const styleList = [
   {
-    id: "fontSize",
+    id: "text",
     list: textSizeList,
     heading: "Font Size",
   },

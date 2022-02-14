@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { ToolItem } from "../../common/Tools/types";
-import { elementType } from "../../render/types";
+import { renderElementType } from "../../render/types";
 import { ButtonIcon } from "../UIWidgets";
 
-const button: elementType = {
+const button: renderElementType = {
   component: "button",
   className: "",
   style: {},

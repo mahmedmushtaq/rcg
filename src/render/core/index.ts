@@ -1,13 +1,13 @@
 import keyToComponentMap from "./keyToComponentMap";
-import { elementType } from "../types";
+import { renderElementType } from "../types";
 import { createElement } from "react";
 import { elementRefType } from "../../common/Tools";
 
 export const elementList: { [key: string]: any } | undefined = {};
 
-export const renderComponent: (config: elementType) => React.ReactElement = (
-  config: elementType
-) => {
+export const renderComponent: (
+  config: renderElementType
+) => React.ReactElement = (config: renderElementType) => {
   const { component, id, className, style, onClick, children } = config;
 
   return createElement(

@@ -15,8 +15,6 @@ function Home() {
     }
   });
 
-  console.log("selectedItem is ", selectedItem);
-
   return (
     <div className="App">
       <div className="flex">
