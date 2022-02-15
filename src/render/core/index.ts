@@ -2,13 +2,14 @@ import keyToComponentMap from "./keyToComponentMap";
 import { renderElementType } from "../types";
 import { createElement } from "react";
 import { elementRefType } from "../../common/Tools";
+import { attachFunctions } from "./attachFunctions";
 
 export const elementList: { [key: string]: any } | undefined = {};
 
 export const renderComponent: (
   config: renderElementType
 ) => React.ReactElement = (config: renderElementType) => {
-  const { component, id, className, style, onClick, children } = config;
+  const { component, id, className, style, children } = config;
 
   return createElement(
     component,
@@ -16,13 +17,7 @@ export const renderComponent: (
       key: id,
       className,
       style,
-      onClick,
-      ref: (el: elementRefType<HTMLButtonElement>) => {
-        if (config.addElementRef) {
-          config.addElementRef(id!, el);
-        }
-        //config.ref(id, el);
-      },
+      ...attachFunctions(config),
     },
     children
       ? typeof children === "string"
@@ -35,7 +30,4 @@ export const renderComponent: (
           })
       : undefined
   );
-
-  // elementList![`${id}`] = createElementName;
-  // return createElementName;
 };

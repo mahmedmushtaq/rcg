@@ -17,7 +17,7 @@ const GenericSelector = (props: GenericSelectorPropsType) => {
               {props.lists?.map((list, index) => (
                 <Selector
                   {...props}
-                  key={index}
+                  key={list.id}
                   id={list.id}
                   list={list.list}
                   smallHeading

@@ -14,6 +14,7 @@ const ShowStyleSelector = () => {
       {styleList.map((style) => (
         <div className="my-1" key={style.id}>
           <Selector
+            key={style.id}
             list={style.list}
             lists={style.lists}
             heading={style.heading}

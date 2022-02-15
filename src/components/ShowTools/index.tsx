@@ -5,24 +5,16 @@ import useToShowTools from "./useToShowTools";
 import SideBar from "../UIWidgets/SideBar";
 
 const ShowTools = () => {
-  const {
-    searchTool,
-    allTools,
-    setSearchTool,
-    onSelectTool,
-    setSelectedElement,
-    addElementRef,
-  } = useToShowTools();
+  const { searchTool, allTools, setSearchTool, onSelectTool } =
+    useToShowTools();
 
   return (
     <SideBar searchOptions={{ search: searchTool, setSearch: setSearchTool }}>
       <div className="mt-5 grid grid-cols-2 gap-4">
         {allTools.map((tool) => (
           <Item
-            setSelectedElement={setSelectedElement}
             key={tool.element.id + "-" + Math.random()}
             tool={tool}
-            addElementRef={addElementRef}
             onSelected={onSelectTool}
           />
         ))}

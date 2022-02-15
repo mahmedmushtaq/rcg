@@ -22,32 +22,68 @@ export const addNewElementToWebState = (
   completeWebState: webStateType,
   element: renderElementType
 ) => {
-  // defaultId ( change it later )
   element.parentId = element.parentId || "default";
-  if (!keyMap[element.id]) {
-    keyMap[element.id] = { data: element, childrens: [] };
+  const webState = { ...completeWebState };
+  if (!webState[element.id]) {
+    webState[element.id] = { ...element, children: [] };
   }
 
-  const keyMapValue = keyMap[element.parentId];
+  const webStateElValue = webState[element.parentId];
 
-  keyMap[`${element.parentId}`] = {
-    ...keyMapValue,
-    childrens: [...keyMapValue.childrens, element.id],
+  const { children } = webStateElValue;
+  type unionType = renderElementType | string;
+  let childArray: unionType[] = [];
+  if (children) {
+    if (!Array.isArray(children)) {
+      // children is not array, mean simple string
+      childArray = [children! as unionType];
+    } else {
+      // children is an array either renderType[] or string[]
+      childArray = [...(children as unionType[])];
+    }
+    // add new child with previous one
+    (childArray as unionType[]) = [...childArray, element];
+  } else {
+    // first new child
+    childArray = [element];
+  }
+
+  webState[element.parentId] = {
+    ...webStateElValue,
+    //@ts-ignore
+    children: childArray,
   };
 
-  const webState = { ...completeWebState };
+  // let childrenValue: (string | renderElementType)[] = [];
 
-  for (let key in keyMap) {
-    const { data, childrens } = keyMap[key];
-    if (childrens.length > 0) {
-      webState[key] = {
-        ...data,
-        children: [...childrens.map((item) => keyMap[item].data)],
-      };
-    }
-  }
+  // if (webStateElValue.children) {
+  //   if (typeof webStateElValue.children === "string") {
+  //     childrenValue = [webStateElValue.children];
+  //   }
+
+  //   childrenValue = [...webStateElValue.children];
+  // }
+
+  // webState[`${element.parentId}`] = {
+  //   ...webStateElValue,
+  //   children: [...webStateElValue.children, element],
+  // };
+
+  // for (let key in keyMap) {
+  //   const { data, childrens } = keyMap[key];
+  //   if (childrens.length > 0) {
+  //     webState[key] = {
+  //       ...data,
+  //       children: [...childrens.map((item) => keyMap[item].data)],
+  //     };
+  //   }
+  // }
 
   console.log("construct obj is ", webState);
 
   return webState;
+};
+
+const elementStartDragging = () => {
+  // remove
 };

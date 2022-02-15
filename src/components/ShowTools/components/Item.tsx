@@ -8,33 +8,18 @@ import { generateElementUniqueId } from "../../../common/helpers";
 interface PropType {
   tool: ToolItem;
   onSelected: (prop: ToolItem) => void;
-  setSelectedElement: (prop: renderElementType) => void;
-  addElementRef: (id: any, el: elementRefType<HTMLElement>) => void;
 }
 
-const Item = ({
-  onSelected,
-  tool,
-  setSelectedElement,
-  addElementRef,
-}: PropType) => {
-  const itemSelected = (el: renderElementType) => () => {
-    setSelectedElement(el);
-  };
-
+const Item = ({ onSelected, tool }: PropType) => {
   return (
     <div
       className="shadow-inner p-4 flex flex-col bg-lbg rounded items-center cursor-pointer"
       onClick={() => {
-        const elementUniqueId = generateElementUniqueId(tool.element.id);
-
         onSelected({
           ...tool,
           element: {
             ...tool.element,
-            id: elementUniqueId,
-            addElementRef,
-            onClick: itemSelected({ ...tool.element, id: elementUniqueId }),
+            id: generateElementUniqueId(tool.element.id),
           },
         });
       }}

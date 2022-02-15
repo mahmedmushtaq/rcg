@@ -11,12 +11,3 @@ export const websiteState = atom<webStateType>({
     },
   }, // default value (aka initial value)
 });
-
-// export const webState = selector<webStateType>({
-//   key: "completeWebState",
-//   get: ({ get }) => get(websiteState),
-//   // set: ({ set, get }, newElement) => {
-//   //   const webState = get(websiteState);
-//   //   set(websiteState, addNewElementToWebState(webState, newElement as renderElementType));
-//   // },
-// });

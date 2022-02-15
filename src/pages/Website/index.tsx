@@ -9,7 +9,7 @@ const Website = (props: PropsType) => {
   return (
     <div className="">
       {Object.keys(allElements).map((item) => (
-        <Render config={allElements[item]} />
+        <Render key={item} config={allElements[item]} />
       ))}
     </div>
   );

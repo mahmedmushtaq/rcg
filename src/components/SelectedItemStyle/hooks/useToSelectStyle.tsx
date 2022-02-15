@@ -23,6 +23,9 @@ const useToSelectStyles = () => {
     let classesList: dynamicStyleType = {};
     if (selectedItem) {
       const ref = selectedEl[selectedItem.id];
+      console.log("ref is ", ref);
+      ref.style.background = "red";
+      console.log("ref is ", ref.style.background);
       classesList = convertClassesToObj(ref.className);
     }
 
@@ -33,6 +36,11 @@ const useToSelectStyles = () => {
     if (!selectedItem || Object.keys(selectedValues).length === 0) return;
 
     const ref = selectedEl[selectedItem.id];
+    console.log(
+      "ref.ClassName",
+      ref.className,
+      convertObjToClasses(selectedValues)
+    );
     ref.className = convertObjToClasses(selectedValues);
   }, [selectedValues]);
 
