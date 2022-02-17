@@ -1,16 +1,14 @@
-import keyToComponentMap from "./keyToComponentMap";
-import { renderElementType } from "../types";
 import { createElement } from "react";
-import { elementRefType } from "../../common/Tools";
 import { attachFunctions } from "./attachFunctions";
-import { Component } from "../../common/helpers/tree";
+import { WebComponent } from "../../common/helpers/tree";
 
 export const elementList: { [key: string]: any } | undefined = {};
 
-export const renderComponent: (config: Component) => React.ReactElement = (
-  config: Component
+export const renderComponent: (config: WebComponent) => React.ReactElement = (
+  config: WebComponent
 ) => {
   // const { component, id, className, style, children, draggable } = config;
+  console.log("render is ", config);
 
   return createElement(
     config.data.component,

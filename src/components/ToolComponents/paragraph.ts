@@ -1,13 +1,13 @@
 import { FileText } from "react-feather";
 import { ToolItem } from "../../common/Tools/types";
-import { renderElementType } from "../../render/types";
+import { renderWebComponentType } from "../../render/types";
 
-const paragraph: renderElementType = {
+const paragraph: renderWebComponentType = {
   component: "p",
   className: "",
   style: {},
-  id: "add-paragraph",
-  children: "Write something here....",
+  // id: "add-paragraph",
+  //children: "Write something here....",
   draggable: true,
 };
 

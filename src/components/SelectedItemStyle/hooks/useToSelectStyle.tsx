@@ -19,22 +19,22 @@ const useToSelectStyles = () => {
     setSelectedValues({ ...selectedValuesClone });
   };
 
-  useEffect(() => {
-    let classesList: dynamicStyleType = {};
-    if (selectedItem) {
-      const ref = selectedEl[selectedItem.id];
-      classesList = convertClassesToObj(ref.className);
-    }
+  // useEffect(() => {
+  //   let classesList: dynamicStyleType = {};
+  //   if (selectedItem) {
+  //     const ref = selectedEl[selectedItem.id];
+  //     classesList = convertClassesToObj(ref.className);
+  //   }
 
-    setSelectedValues(classesList);
-  }, [selectedItem]);
+  //   setSelectedValues(classesList);
+  // }, [selectedItem]);
 
-  useEffect(() => {
-    if (!selectedItem || Object.keys(selectedValues).length === 0) return;
+  // useEffect(() => {
+  //   if (!selectedItem || Object.keys(selectedValues).length === 0) return;
 
-    const ref = selectedEl[selectedItem.id];
-    ref.className = convertObjToClasses(selectedValues);
-  }, [selectedValues]);
+  //   const ref = selectedEl[selectedItem.id];
+  //   ref.className = convertObjToClasses(selectedValues);
+  // }, [selectedValues]);
 
   return { onChange, selectedValues };
 };

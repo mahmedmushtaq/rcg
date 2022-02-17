@@ -1,34 +1,34 @@
 import React from "react";
 import { elementRefType } from "../../common/Tools";
-import { renderElementType } from "../types";
+import { renderWebComponentType } from "../types";
 
-export const attachFunctions = (config: renderElementType) => {
+export const attachFunctions = (config: renderWebComponentType) => {
   return {
     onClick: () => {
       // element selected
-      if (config.onClick) config.onClick(config);
+      //if (config.onClick) config.onClick(config);
     },
     ref: (el: elementRefType<HTMLButtonElement>) => {
       // used to store reference in recoil state management
       if (config.addElementRef) {
-        config.addElementRef(config.id, el);
+        // config.addElementRef(config.id, el);
       }
     },
     onDragStart: (e: React.DragEvent) => {
       if (config.onDragStart) {
-        config.onDragStart(e, config);
+        //   config.onDragStart(e, config);
       }
     },
 
     onDragOver: (e: React.DragEvent) => {
       if (config.onDragOver) {
-        config.onDragOver(e, config);
+        //  config.onDragOver(e, config);
       }
     },
 
     onDrop: (e: React.DragEvent) => {
       if (config.onDrop) {
-        config.onDrop(e, config);
+        //  config.onDrop(e, config);
       }
     },
 

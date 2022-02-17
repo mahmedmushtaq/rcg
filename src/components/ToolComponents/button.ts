@@ -1,14 +1,12 @@
 import { useRef } from "react";
 import { ToolItem } from "../../common/Tools/types";
-import { renderElementType } from "../../render/types";
+import { renderWebComponentType } from "../../render/types";
 import { ButtonIcon } from "../UIWidgets";
 
-const button: renderElementType = {
+const button: renderWebComponentType = {
   component: "button",
   className: "",
   style: {},
-  id: "add-btn",
-  children: "Click Me",
   draggable: true,
 };
 

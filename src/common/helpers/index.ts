@@ -1,4 +1,4 @@
-import { renderElementType } from "../../render/types";
+import { renderWebComponentType } from "../../render/types";
 import { dynamicStyleType, webStateType } from "../types";
 
 export * from "./webStateHelpers";

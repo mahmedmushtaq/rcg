@@ -1,9 +1,9 @@
 import React from "react";
 import { atom } from "recoil";
 import { elementRefType } from "../common/Tools";
-import { renderElementType } from "../render/types";
+import { renderWebComponentType } from "../render/types";
 
-export const selectedElementState = atom<renderElementType | undefined>({
+export const selectedElementState = atom<renderWebComponentType | undefined>({
   key: "selectedElement",
   default: undefined,
 });

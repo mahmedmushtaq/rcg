@@ -3,18 +3,18 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { onDropElement, onStartDraggingElement } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
 import { elementRefs, selectedElementState, websiteState } from "../../recoil";
-import { renderElementType } from "../types";
+import { renderWebComponentType } from "../types";
 
 const useToHandleFunctions = () => {
   const [allElementRefs, setElementsRef] = useRecoilState(elementRefs);
   const setSelectedElement = useSetRecoilState(selectedElementState);
   const [webState, setWebState] = useRecoilState(websiteState);
   const [draggableElement, setDraggableElement] = useState<
-    renderElementType | undefined
+    renderWebComponentType | undefined
   >();
 
   const [onDropParentEl, setOnDropParentEl] = useState<
-    renderElementType | undefined
+    renderWebComponentType | undefined
   >();
 
   useEffect(() => {
@@ -24,20 +24,20 @@ const useToHandleFunctions = () => {
     setWebState(newWebState);
   }, [draggableElement]);
 
-  useEffect(() => {
-    if (!onDropParentEl) return;
-    const newWebState = onDropElement(webState, {
-      ...draggableElement!,
-      parentId: draggableElement!.id,
-    });
+  // useEffect(() => {
+  //   if (!onDropParentEl) return;
+  //   const newWebState = onDropElement(webState, {
+  //     ...draggableElement!,
+  //     parentId: draggableElement!.id,
+  //   });
 
-    setWebState(newWebState);
+  //   setWebState(newWebState);
 
-    setTimeout(() => {
-      setDraggableElement(undefined);
-      setOnDropParentEl(undefined);
-    }, 100);
-  }, [onDropParentEl]);
+  //   setTimeout(() => {
+  //     setDraggableElement(undefined);
+  //     setOnDropParentEl(undefined);
+  //   }, 100);
+  // }, [onDropParentEl]);
 
   console.log("webState is ", webState);
 
@@ -50,39 +50,40 @@ const useToHandleFunctions = () => {
     setElementsRef({ ...newElsRef });
   };
 
-  const onClick = (el: renderElementType) => {
-    setSelectedElement(el);
-  };
+  // const onClick = (el: renderElementType) => {
+  //   setSelectedElement(el);
+  // };
 
-  const onDragStart = (e: React.DragEvent, el: renderElementType) => {
-    e.dataTransfer.setData("transfer_el", JSON.stringify(el));
-    console.log(" =========== onDragStart ========== ", JSON.stringify(el));
-    setDraggableElement(el);
+  // const onDragStart = (e: React.DragEvent, el: renderElementType) => {
+  //   e.dataTransfer.setData("transfer_el", JSON.stringify(el));
+  //   console.log(" =========== onDragStart ========== ", JSON.stringify(el));
+  //   setDraggableElement(el);
 
-    // startDragging();
-    // remove this element from parentTree
-  };
+  //   // startDragging();
+  //   // remove this element from parentTree
+  // };
 
-  const onDragOver = (e: React.DragEvent, el: renderElementType) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log(" =========== onDragOver ========== ");
-  };
+  // const onDragOver = (e: React.DragEvent, el: renderElementType) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   console.log(" =========== onDragOver ========== ");
+  // };
 
-  const onDrop = (e: React.DragEvent, parentEl: renderElementType) => {
-    e.preventDefault();
-    const el = e.dataTransfer.getData("transfer_el");
-    // const transferEl = JSON.parse(el);
-    setOnDropParentEl(parentEl);
+  // const onDrop = (e: React.DragEvent, parentEl: renderElementType) => {
+  //   e.preventDefault();
+  //   const el = e.dataTransfer.getData("transfer_el");
+  //   // const transferEl = JSON.parse(el);
+  //   setOnDropParentEl(parentEl);
 
-    console.log(" =========== onDrop ========== ", webState);
-    // add this element to parentEl
+  //   console.log(" =========== onDrop ========== ", webState);
+  //   // add this element to parentEl
 
-    // const card = document.getElementById(card_id);
-    // e.target.appendChild(card);
-  };
+  //   // const card = document.getElementById(card_id);
+  //   // e.target.appendChild(card);
+  // };
 
-  return { addElementRef, onClick, onDragOver, onDragStart, onDrop };
+  // return { addElementRef, onClick, onDragOver, onDragStart, onDrop };
+  return {};
 };
 
 export default useToHandleFunctions;

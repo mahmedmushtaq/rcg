@@ -1,6 +1,6 @@
 import React, { createRef, useRef } from "react";
 import { Icon } from "react-feather";
-import { renderElementType } from "../../../render/types";
+import { renderWebComponentType } from "../../../render/types";
 import { elementRefType, ToolItem } from "../../../common/Tools";
 import { P } from "../../UIWidgets";
 import { generateElementUniqueId } from "../../../common/helpers";
@@ -19,7 +19,7 @@ const Item = ({ onSelected, tool }: PropType) => {
           ...tool,
           element: {
             ...tool.element,
-            id: generateElementUniqueId(tool.element.id),
+            //id: generateElementUniqueId(tool.element.id),
           },
         });
       }}

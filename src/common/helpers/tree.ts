@@ -1,35 +1,35 @@
-import { renderElementType } from "../../render/types";
+import { renderWebComponentType } from "../../render/types";
 
-export class Component {
+export class WebComponent {
   constructor(
     public id: string,
-    public data: renderElementType,
-    public childrens: (string | Component)[] = []
+    public data: renderWebComponentType,
+    public childrens: (string | WebComponent)[] = []
   ) {}
 }
 
 export class Tree {
-  private _root: Component | null = null;
+  private _root: WebComponent | null = null;
   constructor() {
     this._root = null;
   }
 
-  add(newComponent: Component, parentId?: string) {
-    const component = newComponent;
+  add(newWebComponent: WebComponent, parentId?: string) {
+    const WebComponent = newWebComponent;
     const parent = parentId ? this.findBFS(parentId) : null;
     if (parent) {
-      (parent as Component).childrens.push(component);
+      (parent as WebComponent).childrens.push(WebComponent);
     } else {
       // If there's no parent, make this the root node
-      if (!this._root) this._root = component;
+      if (!this._root) this._root = WebComponent;
       else return "Tried to store node as root when root already exists.";
     }
   }
 
   findBFS(id: string) {
-    let _node: Component | null = null;
+    let _node: WebComponent | null = null;
     // Go thru every node in BFS
-    this.traverseBFS((node: Component) => {
+    this.traverseBFS((node: WebComponent) => {
       // Return match if found
       if (node && node.id === id) {
         _node = node;
@@ -39,7 +39,7 @@ export class Tree {
     return _node;
   }
 
-  traverseBFS(cb: (data: Component) => void, requireFirst = false) {
+  traverseBFS(cb: (data: WebComponent) => void, requireFirst = false) {
     const queue = [this._root];
 
     if (cb)
@@ -53,14 +53,14 @@ export class Tree {
         // Push children of current node to end of queue
         if (node && node.childrens) {
           for (const child of node!.childrens) {
-            queue.push(child as Component);
+            queue.push(child as WebComponent);
           }
         }
       }
   }
 
   rootNode() {
-    let rootNode: Component;
+    let rootNode: WebComponent;
     this.traverseBFS((node) => {
       rootNode = node;
     }, true);
@@ -68,5 +68,3 @@ export class Tree {
     return rootNode!;
   }
 }
-
- 

@@ -1,20 +1,20 @@
 import { useRecoilState } from "recoil";
 import { addNewElementToWebState } from "../../common/helpers";
 import { ToolItem } from "../../common/Tools";
-import { websiteState } from "../../recoil";
+import { webState } from "../../recoil";
 import useToHandleFunctions from "./useToHandleFunctions";
 
 const useToGenerateElement = () => {
   const functionsList = useToHandleFunctions();
 
-  const [webState, setWebState] = useRecoilState(websiteState);
+  const [completeWebState, setWebState] = useRecoilState(webState);
 
   const onSelectTool = (tool: ToolItem) => {
-    const completeWebState = addNewElementToWebState(webState, {
+    const newWebState = addNewElementToWebState(completeWebState!, {
       ...tool.element,
       ...functionsList,
     });
-    setWebState(completeWebState);
+  //  setWebState(newWebState);
   };
 
   return {

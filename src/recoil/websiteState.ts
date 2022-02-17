@@ -1,13 +1,14 @@
 import { atom, selector } from "recoil";
+import { Tree, WebComponent } from "../common/helpers/tree";
 import { webStateType } from "../common/types";
-import { renderElementType } from "../render/types";
+import { renderWebComponentType } from "../render/types";
 
 export const websiteState = atom<webStateType>({
   key: "webState", // unique ID (with respect to other atoms/selectors)
-  default: {
-    default: {
-      component: "div",
-      id: "default",
-    },
-  }, // default value (aka initial value)
+  default: {}, // default value (aka initial value)
+});
+
+export const webState = atom<Tree>({
+  key: "webComponentState",
+  default: new Tree(),
 });
