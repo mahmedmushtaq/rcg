@@ -9,6 +9,7 @@ const button: renderElementType = {
   style: {},
   id: "add-btn",
   children: "Click Me",
+  draggable: true,
 };
 
 const Button: ToolItem = {

@@ -1,3 +1,4 @@
+import React from "react";
 import { elementRefType } from "../../common/Tools";
 import { renderElementType } from "../types";
 
@@ -11,6 +12,23 @@ export const attachFunctions = (config: renderElementType) => {
       // used to store reference in recoil state management
       if (config.addElementRef) {
         config.addElementRef(config.id, el);
+      }
+    },
+    onDragStart: (e: React.DragEvent) => {
+      if (config.onDragStart) {
+        config.onDragStart(e, config);
+      }
+    },
+
+    onDragOver: (e: React.DragEvent) => {
+      if (config.onDragOver) {
+        config.onDragOver(e, config);
+      }
+    },
+
+    onDrop: (e: React.DragEvent) => {
+      if (config.onDrop) {
+        config.onDrop(e, config);
       }
     },
 

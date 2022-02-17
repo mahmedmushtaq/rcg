@@ -1,5 +1,6 @@
 import { renderElementType } from "../../render/types";
 import { webStateType } from "../types";
+import { Tree, Component } from "./tree";
 
 const defaultWebState = {
   component: "div",
@@ -9,29 +10,12 @@ const defaultWebState = {
   children: "",
 };
 
-const keyMap: {
-  [key: string | number]: {
-    data: renderElementType;
-    childrens: (string | number)[];
-  };
-} = {
-  default: { data: defaultWebState, childrens: [] },
-};
+type unionType = renderElementType | string;
 
-export const addNewElementToWebState = (
-  completeWebState: webStateType,
+const addElementIntoParentChildren = (
+  children: renderElementType["children"],
   element: renderElementType
 ) => {
-  element.parentId = element.parentId || "default";
-  const webState = { ...completeWebState };
-  if (!webState[element.id]) {
-    webState[element.id] = { ...element, children: [] };
-  }
-
-  const webStateElValue = webState[element.parentId];
-
-  const { children } = webStateElValue;
-  type unionType = renderElementType | string;
   let childArray: unionType[] = [];
   if (children) {
     if (!Array.isArray(children)) {
@@ -48,42 +32,100 @@ export const addNewElementToWebState = (
     childArray = [element];
   }
 
-  webState[element.parentId] = {
-    ...webStateElValue,
+  return childArray;
+};
+
+/**
+ *
+ * <div id=1> <button id=2> from button </button> <a href="" id=3>
+ * from anchor tag </a> < button id=4> < a id=5> Button root whose root is id 1 and anchor tag whose root is id 4
+ *
+ *
+ *
+ */
+
+export const dummyTraverseTree = () => {
+  const tree = new Tree();
+  tree.add(new Component("1", { component: "div", id: "1" }), "1");
+  tree.add(
+    new Component("2", { component: "button", id: "1" }, ["from button"]),
+    "1"
+  );
+  tree.add(
+    new Component("3", { component: "a", id: "1" }, ["from anchor tag"]),
+    "1"
+  );
+  tree.add(new Component("4", { component: "button", id: "1" }), "1");
+  tree.add(
+    new Component("5", { component: "a", id: "1" }, [
+      "Button root whose root is id 1 and anchor tag whose root is id 4",
+    ]),
+    "4"
+  );
+
+  return tree.rootNode();
+};
+
+export const addNewElementToWebState = (
+  completeWebState: webStateType,
+  element: renderElementType
+) => {
+  element.parentId = element.parentId || "body";
+
+  const webState = { ...completeWebState };
+
+  const webStateElValue = webState[element.parentId];
+  if (webStateElValue) {
+    const { children } = webStateElValue;
+
+    const allChildrens = addElementIntoParentChildren(children, element);
+
+    webState[element.parentId] = {
+      ...webStateElValue,
+      //@ts-ignore
+      children: allChildrens,
+    };
+  } else {
+    webState[element.parentId] = {
+      ...element,
+      children: [element],
+    };
+  }
+  return webState;
+};
+
+export const onStartDraggingElement = (
+  webState: webStateType,
+  el: renderElementType
+) => {
+  // remove element from webState
+  const completeWebState = { ...webState };
+
+  console.log("completeWebState ", completeWebState);
+
+  const parentKeyValue = completeWebState[el.parentId!];
+
+  const removeChild = (parentKeyValue.children as unionType[])?.filter(
+    (item) => {
+      if (typeof item === "string") {
+        return item;
+      }
+      return item.id !== el.id;
+    }
+  );
+
+  completeWebState[el.parentId!] = {
+    ...parentKeyValue,
     //@ts-ignore
-    children: childArray,
+    children: removeChild,
   };
-
-  // let childrenValue: (string | renderElementType)[] = [];
-
-  // if (webStateElValue.children) {
-  //   if (typeof webStateElValue.children === "string") {
-  //     childrenValue = [webStateElValue.children];
-  //   }
-
-  //   childrenValue = [...webStateElValue.children];
-  // }
-
-  // webState[`${element.parentId}`] = {
-  //   ...webStateElValue,
-  //   children: [...webStateElValue.children, element],
-  // };
-
-  // for (let key in keyMap) {
-  //   const { data, childrens } = keyMap[key];
-  //   if (childrens.length > 0) {
-  //     webState[key] = {
-  //       ...data,
-  //       children: [...childrens.map((item) => keyMap[item].data)],
-  //     };
-  //   }
-  // }
-
-  console.log("construct obj is ", webState);
 
   return webState;
 };
 
-const elementStartDragging = () => {
-  // remove
+export const onDropElement = (
+  webState: webStateType,
+  el: renderElementType
+) => {
+  return addNewElementToWebState(webState, el);
 };

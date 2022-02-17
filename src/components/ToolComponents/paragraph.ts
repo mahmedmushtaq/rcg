@@ -8,6 +8,7 @@ const paragraph: renderElementType = {
   style: {},
   id: "add-paragraph",
   children: "Write something here....",
+  draggable: true,
 };
 
 const Paragraph: ToolItem = {
