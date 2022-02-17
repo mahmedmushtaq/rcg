@@ -19,7 +19,7 @@ const Item = ({ onSelected, tool }: PropType) => {
           ...tool,
           element: {
             ...tool.element,
-            //id: generateElementUniqueId(tool.element.id),
+            id: generateElementUniqueId(tool.element.id),
           },
         });
       }}

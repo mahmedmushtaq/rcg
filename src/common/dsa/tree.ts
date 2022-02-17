@@ -17,11 +17,14 @@ export class Tree {
   add(newWebComponent: WebComponent, parentId?: string) {
     const WebComponent = newWebComponent;
     const parent = parentId ? this.findBFS(parentId) : null;
+
+    console.log("new add function called ");
+
     if (parent) {
-      (parent as WebComponent).childrens.push(WebComponent);
+      (parent as WebComponent).childrens.push({ ...WebComponent });
     } else {
       // If there's no parent, make this the root node
-      if (!this._root) this._root = WebComponent;
+      if (!this._root) this._root = { ...WebComponent };
       else return "Tried to store node as root when root already exists.";
     }
   }
@@ -68,3 +71,10 @@ export class Tree {
     return rootNode!;
   }
 }
+
+const tree = new Tree();
+
+//@ts-ignore
+tree.add(new WebComponent("body", { component: "div" }));
+
+export default tree;

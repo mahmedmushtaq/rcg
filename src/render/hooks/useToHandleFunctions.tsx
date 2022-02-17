@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import tree from "../../common/dsa/tree";
 import { onDropElement, onStartDraggingElement } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
-import { elementRefs, selectedElementState, websiteState } from "../../recoil";
+import { elementRefs, selectedElementState } from "../../recoil";
 import { renderWebComponentType } from "../types";
 
 const useToHandleFunctions = () => {
   const [allElementRefs, setElementsRef] = useRecoilState(elementRefs);
   const setSelectedElement = useSetRecoilState(selectedElementState);
-  const [webState, setWebState] = useRecoilState(websiteState);
+  //  const [webState, setWebState] = useRecoilState(websiteState);
   const [draggableElement, setDraggableElement] = useState<
     renderWebComponentType | undefined
   >();
@@ -19,9 +20,9 @@ const useToHandleFunctions = () => {
 
   useEffect(() => {
     if (!draggableElement) return;
-    const newWebState = onStartDraggingElement(webState, draggableElement);
+    // const newWebState = onStartDraggingElement(webState, draggableElement);
 
-    setWebState(newWebState);
+    // setWebState(newWebState);
   }, [draggableElement]);
 
   // useEffect(() => {
@@ -39,8 +40,6 @@ const useToHandleFunctions = () => {
   //   }, 100);
   // }, [onDropParentEl]);
 
-  console.log("webState is ", webState);
-
   const addElementRef = (
     id: string,
     refElement: elementRefType<HTMLElement>
@@ -50,9 +49,10 @@ const useToHandleFunctions = () => {
     setElementsRef({ ...newElsRef });
   };
 
-  // const onClick = (el: renderElementType) => {
-  //   setSelectedElement(el);
-  // };
+  const onClick = (el: renderWebComponentType) => {
+    console.log("onClick occured ", el);
+    setSelectedElement(el);
+  };
 
   // const onDragStart = (e: React.DragEvent, el: renderElementType) => {
   //   e.dataTransfer.setData("transfer_el", JSON.stringify(el));
@@ -83,7 +83,8 @@ const useToHandleFunctions = () => {
   // };
 
   // return { addElementRef, onClick, onDragOver, onDragStart, onDrop };
-  return {};
+
+  return Object.assign({}, tree);
 };
 
 export default useToHandleFunctions;

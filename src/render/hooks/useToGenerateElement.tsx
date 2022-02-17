@@ -10,11 +10,12 @@ const useToGenerateElement = () => {
   const [completeWebState, setWebState] = useRecoilState(webState);
 
   const onSelectTool = (tool: ToolItem) => {
-    const newWebState = addNewElementToWebState(completeWebState!, {
+    const newWebState = addNewElementToWebState({
       ...tool.element,
       ...functionsList,
     });
-  //  setWebState(newWebState);
+
+    setWebState(newWebState);
   };
 
   return {

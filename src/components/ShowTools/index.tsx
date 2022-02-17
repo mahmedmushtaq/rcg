@@ -13,7 +13,7 @@ const ShowTools = () => {
       <div className="mt-5 grid grid-cols-2 gap-4">
         {allTools.map((tool) => (
           <Item
-            // key={tool.element.id + "-" + Math.random()}
+            key={tool.element.id}
             tool={tool}
             onSelected={onSelectTool}
           />

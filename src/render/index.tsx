@@ -1,15 +1,13 @@
-import { dummyTraverseTree } from "../common/helpers";
+import { newWebStateType } from "../common/types";
 import { renderComponent } from "./core";
 import { renderWebComponentType } from "./types";
 
 interface renderPropType {
-  config?: renderWebComponentType;
+  config?: newWebStateType;
 }
 
 const Render = (props: renderPropType) => {
-  const traversing = dummyTraverseTree();
-
-  return <div>{renderComponent(traversing)}</div>;
+  return <div>{props.config && renderComponent(props.config)}</div>;
 };
 
 export default Render;

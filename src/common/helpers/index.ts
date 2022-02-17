@@ -1,5 +1,5 @@
 import { renderWebComponentType } from "../../render/types";
-import { dynamicStyleType, webStateType } from "../types";
+import { dynamicStyleType } from "../types";
 
 export * from "./webStateHelpers";
 
@@ -28,3 +28,5 @@ export const convertObjToClasses = (selectedValues: dynamicStyleType) => {
 
   return finalClassNameString;
 };
+
+export const parseStringFunc = (fn: string) => eval(fn);
