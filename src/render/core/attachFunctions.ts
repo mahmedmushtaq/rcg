@@ -6,14 +6,14 @@ import { renderWebComponentType } from "../types";
 export const attachFunctions = (config: renderWebComponentType) => {
   return {
     onClick: () => {
-      if (config.onClick) parseStringFunc(config.onClick as string)(config);
+      if (config.onClick) config.onClick(config);
+      //parseStringFunc(config.onClick as string)(config);
     },
     ref: (el: elementRefType<HTMLButtonElement>) => {
       // used to store reference in recoil state management
       if (config.addElementRef) {
-        console.log(config.addElementRef);
         // const addElementRef = eval(config.addElementRef as string);
-        // addElementRef(config.id, el);
+        config.addElementRef(config.id, el);
       }
     },
     onDragStart: (e: React.DragEvent) => {

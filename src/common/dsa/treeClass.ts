@@ -74,7 +74,13 @@ export class Tree {
 
 const tree = new Tree();
 
-//@ts-ignore
-tree.add(new WebComponent("body", { component: "div" }));
+tree.add(
+  new WebComponent("body", {
+    component: "div",
+    id: "body",
+    parentId: "body",
+    child: "",
+  })
+);
 
 export default tree;

@@ -9,7 +9,11 @@ export interface dynamicStyleType {
 // }
 
 export interface newWebStateType {
-   childrens: (string | newWebStateType)[];
-   data: renderWebComponentType;
-   id: string;
+  childrens: (string | newWebStateType)[];
+  data: renderWebComponentType;
+  id: string;
+}
+
+export interface treeStateType {
+  [key: string]: newWebStateType;
 }

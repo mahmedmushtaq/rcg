@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import tree from "../../common/dsa/tree";
 import { onDropElement, onStartDraggingElement } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
 import { elementRefs, selectedElementState } from "../../recoil";
@@ -83,8 +82,7 @@ const useToHandleFunctions = () => {
   // };
 
   // return { addElementRef, onClick, onDragOver, onDragStart, onDrop };
-
-  return Object.assign({}, tree);
+  return { onClick, addElementRef };
 };
 
 export default useToHandleFunctions;

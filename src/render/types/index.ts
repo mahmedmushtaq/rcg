@@ -1,15 +1,14 @@
 import React from "react";
 import { elementRefType } from "../../common/Tools";
 
-type dragFunctionType =
-  | ((e: React.DragEvent, el: renderWebComponentType) => void)
-  | string;
+type dragFunctionType = (
+  e: React.DragEvent,
+  el: renderWebComponentType
+) => void;
 
 export interface IRenderElementAttachFunctions {
-  onClick?: ((el: renderWebComponentType) => void) | string;
-  addElementRef?:
-    | ((id: string, el: elementRefType<HTMLElement>) => void)
-    | string;
+  onClick?: (el: renderWebComponentType) => void;
+  addElementRef?: (id: string, el: elementRefType<HTMLElement>) => void;
   onDragStart?: dragFunctionType;
   onDragOver?: dragFunctionType;
   onDrop?: dragFunctionType;
