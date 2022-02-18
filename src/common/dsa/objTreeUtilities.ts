@@ -1,29 +1,49 @@
 import { newWebStateType, treeStateType } from "../types";
 import deepcopy from "deepcopy";
+import { renderWebComponentType } from "../../render/types";
 
-// const componentTree: { [key: string]: newWebStateType } = {
-// body: {
-//   childrens: [],
-//   id: "body",
-//   data: {
-//     component: "div",
-//     id: "body",
-//     parentId: "parent",
-//     child: "",
-//   },
-// },
-// };
-
-// const treeUtilies = (tree: treeStateType) => {
-//   const componentTree = deepcopy(tree);
-//   console.log(
-//     " ================== newComponentDeepCopy ======================== ",
-//     componentTree
-//   );
-//console.log();
+export const storeComponentsMap = new Map<string, renderWebComponentType>();
 
 const treeUtilities = async (completeTree: treeStateType) => {
   const componentTree = { ...deepcopy(completeTree) };
+
+  const storeComponentIntoMap = (
+    id: string,
+    component: renderWebComponentType
+  ) => {
+    storeComponentsMap.set(id, component);
+  };
+
+  const updateComponentMap = (
+    id: string,
+    component: renderWebComponentType
+  ) => {
+    storeComponentsMap.set(id, component);
+  };
+
+  const regenerateTree = async () => {
+    const allKeys = Array.from(storeComponentsMap.keys());
+    const asyncMap = allKeys.map(async (k) => {
+      const val = storeComponentsMap.get(k);
+
+      if (val) {
+        return await addComponentToTree(
+          {
+            id: k,
+            data: { ...val },
+            childrens: [val!.child],
+          },
+          val.parentId
+        );
+      }
+
+      return val;
+    });
+
+    await Promise.all(asyncMap);
+
+    return componentTree;
+  };
 
   const addComponentToTree = async (
     component: newWebStateType,
@@ -33,6 +53,7 @@ const treeUtilities = async (completeTree: treeStateType) => {
     const parentComponent = parentId ? await findComponent(parentId) : null;
     if (!parentComponent) {
       componentTree[id] = { ...component };
+      storeComponentIntoMap(id, { ...component.data });
       return componentTree;
     }
 
@@ -70,7 +91,7 @@ const treeUtilities = async (completeTree: treeStateType) => {
     }
   };
 
-  return { addComponentToTree };
+  return { addComponentToTree, updateComponentMap, regenerateTree };
 };
 
 export { treeUtilities };

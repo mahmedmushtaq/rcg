@@ -2,12 +2,20 @@ import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { onDropElement, onStartDraggingElement } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
-import { elementRefs, selectedElementState } from "../../recoil";
+import {
+  elementRefs,
+  selectedElementState,
+  webState,
+  treeState,
+} from "../../recoil";
 import { renderWebComponentType } from "../types";
 
 const useToHandleFunctions = () => {
   const [allElementRefs, setElementsRef] = useRecoilState(elementRefs);
   const setSelectedElement = useSetRecoilState(selectedElementState);
+  const setWebState = useSetRecoilState(webState);
+  const [allTreeState, setTreeState] = useRecoilState(treeState);
+
   //  const [webState, setWebState] = useRecoilState(websiteState);
   const [draggableElement, setDraggableElement] = useState<
     renderWebComponentType | undefined
@@ -19,25 +27,31 @@ const useToHandleFunctions = () => {
 
   useEffect(() => {
     if (!draggableElement) return;
-    // const newWebState = onStartDraggingElement(webState, draggableElement);
+    // const newWebState = onStartDraggingElement(allTreeState, draggableElement);
 
     // setWebState(newWebState);
   }, [draggableElement]);
 
-  // useEffect(() => {
-  //   if (!onDropParentEl) return;
-  //   const newWebState = onDropElement(webState, {
-  //     ...draggableElement!,
-  //     parentId: draggableElement!.id,
-  //   });
+  useEffect(() => {
+    if (!onDropParentEl) return;
+    (async () => {
+      const newTreeState = await onDropElement(allTreeState, {
+        ...draggableElement!,
+        parentId: onDropParentEl!.id,
+      });
 
-  //   setWebState(newWebState);
+      const firstKey = Object.keys(newTreeState)[0];
 
-  //   setTimeout(() => {
-  //     setDraggableElement(undefined);
-  //     setOnDropParentEl(undefined);
-  //   }, 100);
-  // }, [onDropParentEl]);
+      setTreeState({ ...newTreeState });
+
+      setWebState(newTreeState[firstKey]);
+
+      setTimeout(() => {
+        setDraggableElement(undefined);
+        setOnDropParentEl(undefined);
+      }, 100);
+    })();
+  }, [onDropParentEl]);
 
   const addElementRef = (
     id: string,
@@ -53,36 +67,38 @@ const useToHandleFunctions = () => {
     setSelectedElement(el);
   };
 
-  // const onDragStart = (e: React.DragEvent, el: renderElementType) => {
-  //   e.dataTransfer.setData("transfer_el", JSON.stringify(el));
-  //   console.log(" =========== onDragStart ========== ", JSON.stringify(el));
-  //   setDraggableElement(el);
+  const onDragStart = (e: React.DragEvent, el: renderWebComponentType) => {
+    e.dataTransfer.setData("transfer_el", JSON.stringify(el));
+    console.log(" =========== onDragStart ========== ", JSON.stringify(el));
+    setDraggableElement(el);
 
-  //   // startDragging();
-  //   // remove this element from parentTree
-  // };
+    // startDragging();
+    // remove this element from parentTree
+  };
 
-  // const onDragOver = (e: React.DragEvent, el: renderElementType) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   console.log(" =========== onDragOver ========== ");
-  // };
+  const onDragOver = (e: React.DragEvent, el: renderWebComponentType) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log(" =========== onDragOver ========== ");
+  };
 
-  // const onDrop = (e: React.DragEvent, parentEl: renderElementType) => {
-  //   e.preventDefault();
-  //   const el = e.dataTransfer.getData("transfer_el");
-  //   // const transferEl = JSON.parse(el);
-  //   setOnDropParentEl(parentEl);
+  const onDrop = (e: React.DragEvent, parentEl: renderWebComponentType) => {
+    e.preventDefault();
+    const el = e.dataTransfer.getData("transfer_el");
 
-  //   console.log(" =========== onDrop ========== ", webState);
-  //   // add this element to parentEl
+    console.log("paren tel is ", parentEl);
+    // const transferEl = JSON.parse(el);
+    setOnDropParentEl(parentEl);
 
-  //   // const card = document.getElementById(card_id);
-  //   // e.target.appendChild(card);
-  // };
+    // console.log(" =========== onDrop ========== ", webState);
+    // add this element to parentEl
+
+    // const card = document.getElementById(card_id);
+    // e.target.appendChild(card);
+  };
 
   // return { addElementRef, onClick, onDragOver, onDragStart, onDrop };
-  return { onClick, addElementRef };
+  return { onClick, addElementRef, onDragStart, onDrop, onDragOver };
 };
 
 export default useToHandleFunctions;

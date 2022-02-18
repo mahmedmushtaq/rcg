@@ -22,11 +22,11 @@ export const addNewElementToWebState = async (
 };
 
 export const onStartDraggingElement = (
-  webState: newWebStateType,
+  allTreeState: treeStateType,
   el: renderWebComponentType
 ) => {
   // remove element from webState
-  // const completeWebState = { ...webState };
+  const completeTreeStateType = { ...allTreeState };
 
   // console.log("completeWebState ", completeWebState);
 
@@ -47,12 +47,18 @@ export const onStartDraggingElement = (
   //   children: removeChild,
   // };
 
-  return webState;
+  // return webState;
 };
 
-export const onDropElement = (
-  webState: newWebStateType,
+export const onDropElement = async (
+  allTreeState: treeStateType,
   el: renderWebComponentType
 ) => {
-  // return addNewElementToWebState(webState, el);
+  const { updateComponentMap, regenerateTree } = await treeUtilities(
+    allTreeState
+  );
+
+  updateComponentMap(el.id, el);
+
+  return await regenerateTree();
 };

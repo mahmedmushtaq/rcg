@@ -18,19 +18,19 @@ export const attachFunctions = (config: renderWebComponentType) => {
     },
     onDragStart: (e: React.DragEvent) => {
       if (config.onDragStart) {
-        //   config.onDragStart(e, config);
+        config.onDragStart(e, config);
       }
     },
 
     onDragOver: (e: React.DragEvent) => {
       if (config.onDragOver) {
-        //  config.onDragOver(e, config);
+        config.onDragOver(e, config);
       }
     },
 
     onDrop: (e: React.DragEvent) => {
       if (config.onDrop) {
-        //  config.onDrop(e, config);
+        config.onDrop(e, config);
       }
     },
 
