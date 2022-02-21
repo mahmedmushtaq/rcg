@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { onDropElement, onStartDraggingElement } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
+import { newWebStateType } from "../../common/types";
 import {
   elementRefs,
   selectedElementState,
@@ -18,27 +19,23 @@ const useToHandleFunctions = () => {
 
   //  const [webState, setWebState] = useRecoilState(websiteState);
   const [draggableElement, setDraggableElement] = useState<
-    renderWebComponentType | undefined
+    newWebStateType | undefined
   >();
 
   const [onDropParentEl, setOnDropParentEl] = useState<
-    renderWebComponentType | undefined
+    newWebStateType | undefined
   >();
-
-  useEffect(() => {
-    if (!draggableElement) return;
-    // const newWebState = onStartDraggingElement(allTreeState, draggableElement);
-
-    // setWebState(newWebState);
-  }, [draggableElement]);
 
   useEffect(() => {
     if (!onDropParentEl) return;
     (async () => {
-      const newTreeState = await onDropElement(allTreeState, {
-        ...draggableElement!,
-        parentId: onDropParentEl!.id,
-      });
+      const newTreeState = await onDropElement(
+        allTreeState,
+        {
+          ...draggableElement!,
+        },
+        onDropParentEl!.id
+      );
 
       const firstKey = Object.keys(newTreeState)[0];
 
@@ -62,39 +59,32 @@ const useToHandleFunctions = () => {
     setElementsRef({ ...newElsRef });
   };
 
-  const onClick = (el: renderWebComponentType) => {
-    console.log("onClick occured ", el);
-    setSelectedElement(el);
+  const onClick = (completeElState: newWebStateType) => {
+    console.log("onClick occured ", completeElState);
+    setSelectedElement(completeElState.data);
   };
 
-  const onDragStart = (e: React.DragEvent, el: renderWebComponentType) => {
-    e.dataTransfer.setData("transfer_el", JSON.stringify(el));
-    console.log(" =========== onDragStart ========== ", JSON.stringify(el));
-    setDraggableElement(el);
+  const onDragStart = (
+    e: React.DragEvent,
+    completeElState: newWebStateType
+  ) => {
+    //@ts-ignore
+    e.dataTransfer.setData("transfer_el", e.target.id);
 
-    // startDragging();
-    // remove this element from parentTree
+    //  console.log(" =========== onDragStart ========== ", e.target.id);
+    setDraggableElement(completeElState);
   };
 
-  const onDragOver = (e: React.DragEvent, el: renderWebComponentType) => {
+  const onDragOver = (e: React.DragEvent, completeElState: newWebStateType) => {
     e.stopPropagation();
     e.preventDefault();
     console.log(" =========== onDragOver ========== ");
   };
 
-  const onDrop = (e: React.DragEvent, parentEl: renderWebComponentType) => {
+  const onDrop = (e: React.DragEvent, completeParentEl: newWebStateType) => {
     e.preventDefault();
-    const el = e.dataTransfer.getData("transfer_el");
 
-    console.log("paren tel is ", parentEl);
-    // const transferEl = JSON.parse(el);
-    setOnDropParentEl(parentEl);
-
-    // console.log(" =========== onDrop ========== ", webState);
-    // add this element to parentEl
-
-    // const card = document.getElementById(card_id);
-    // e.target.appendChild(card);
+    setOnDropParentEl(completeParentEl);
   };
 
   // return { addElementRef, onClick, onDragOver, onDragStart, onDrop };

@@ -1,6 +1,10 @@
 import { renderWebComponentType } from "../../render/types";
 import { newWebStateType, treeStateType } from "../types";
-import { treeUtilities } from "../dsa/objTreeUtilities";
+import { TreeOperations } from "../dsa/objTreeUtilities";
+
+const elFormatToWebStateTypeFormat = (el: renderWebComponentType) => {
+  return { id: el.id, childrens: [el.child], data: { ...el } };
+};
 
 export const addNewElementToWebState = async (
   allTreeState: treeStateType,
@@ -12,11 +16,14 @@ export const addNewElementToWebState = async (
   // );
   // return {...deepcopy(tree.rootNode())}
 
-  const { addComponentToTree } = await treeUtilities(allTreeState);
-  const newTreeState = await addComponentToTree(
-    { id: element.id, childrens: [element.child], data: { ...element } },
+  const treeOperations = new TreeOperations(allTreeState);
+
+  const newTreeState = await treeOperations.addComponentToTree(
+    elFormatToWebStateTypeFormat(element),
     element.parentId
   );
+
+  console.log(" =========== new tree state is ========== ", newTreeState);
 
   return { ...newTreeState };
 };
@@ -27,38 +34,19 @@ export const onStartDraggingElement = (
 ) => {
   // remove element from webState
   const completeTreeStateType = { ...allTreeState };
-
-  // console.log("completeWebState ", completeWebState);
-
-  // const parentKeyValue = completeWebState[el.parentId!];
-
-  // const removeChild = (parentKeyValue.children as unionType[])?.filter(
-  //   (item) => {
-  //     if (typeof item === "string") {
-  //       return item;
-  //     }
-  //     return item.id !== el.id;
-  //   }
-  // );
-
-  // completeWebState[el.parentId!] = {
-  //   ...parentKeyValue,
-  //   //@ts-ignore
-  //   children: removeChild,
-  // };
-
-  // return webState;
 };
 
 export const onDropElement = async (
   allTreeState: treeStateType,
-  el: renderWebComponentType
+  el: newWebStateType,
+  newParentId: string
 ) => {
-  const { updateComponentMap, regenerateTree } = await treeUtilities(
-    allTreeState
-  );
+  const operations = new TreeOperations(allTreeState);
 
-  updateComponentMap(el.id, el);
+  const newTreeState = await operations.updateComponentMap(el, {
+    newParentId,
+    componentNewId: Math.random() + "",
+  });
 
-  return await regenerateTree();
+  return newTreeState;
 };

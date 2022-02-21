@@ -14,10 +14,11 @@ export const renderComponent: (
     config.data.component,
     {
       key: config.id,
+      id: config.id,
       className: config.data.className,
       style: config.data.style,
       draggable: config.data.draggable,
-      ...attachFunctions(config.data),
+      ...attachFunctions(config),
     },
     config.childrens?.map((child) => {
       if (typeof child === "string") {

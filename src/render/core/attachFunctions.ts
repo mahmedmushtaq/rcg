@@ -1,36 +1,38 @@
 import React from "react";
 import { parseStringFunc } from "../../common/helpers";
 import { elementRefType } from "../../common/Tools";
+import { newWebStateType } from "../../common/types";
 import { renderWebComponentType } from "../types";
 
-export const attachFunctions = (config: renderWebComponentType) => {
+export const attachFunctions = (config: newWebStateType) => {
+  const { data } = config;
   return {
     onClick: () => {
-      if (config.onClick) config.onClick(config);
+      if (data.onClick) data.onClick(config);
       //parseStringFunc(config.onClick as string)(config);
     },
     ref: (el: elementRefType<HTMLButtonElement>) => {
       // used to store reference in recoil state management
-      if (config.addElementRef) {
+      if (data.addElementRef) {
         // const addElementRef = eval(config.addElementRef as string);
-        config.addElementRef(config.id, el);
+        data.addElementRef(config.id, el);
       }
     },
     onDragStart: (e: React.DragEvent) => {
-      if (config.onDragStart) {
-        config.onDragStart(e, config);
+      if (data.onDragStart) {
+        data.onDragStart(e, config);
       }
     },
 
     onDragOver: (e: React.DragEvent) => {
-      if (config.onDragOver) {
-        config.onDragOver(e, config);
+      if (data.onDragOver) {
+        data.onDragOver(e, config);
       }
     },
 
     onDrop: (e: React.DragEvent) => {
-      if (config.onDrop) {
-        config.onDrop(e, config);
+      if (data.onDrop) {
+        data.onDrop(e, config);
       }
     },
 

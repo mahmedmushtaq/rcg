@@ -1,33 +1,71 @@
 import { newWebStateType, treeStateType } from "../types";
 import deepcopy from "deepcopy";
 import { renderWebComponentType } from "../../render/types";
+import { defaultBodyValue } from "../enums";
 
 export const storeComponentsMap = new Map<string, renderWebComponentType>();
 
-const treeUtilities = async (completeTree: treeStateType) => {
-  const componentTree = { ...deepcopy(completeTree) };
+class TreeOperations {
+  private completeTreeState: treeStateType;
+  constructor(treeState: treeStateType) {
+    this.completeTreeState = { ...deepcopy(treeState) };
+  }
 
-  const storeComponentIntoMap = (
-    id: string,
-    component: renderWebComponentType
-  ) => {
+  private storeComponentIntoMap(component: renderWebComponentType) {
+    const { id } = component;
     storeComponentsMap.set(id, component);
-  };
+  }
 
-  const updateComponentMap = (
-    id: string,
-    component: renderWebComponentType
-  ) => {
-    storeComponentsMap.set(id, component);
-  };
+  async updateComponentMap(
+    component: newWebStateType,
+    idsData: {
+      newParentId: string;
+      componentNewId: string;
+    }
+  ) {
+    const { newParentId, componentNewId: newId } = idsData;
+    console.log("this tree state is ", this.completeTreeState);
+    // //  storeComponentsMap.set(id, component);
+    const { parentId: oldParentId, id } = component.data;
 
-  const regenerateTree = async () => {
+    const oldParent = await this.findComponent(oldParentId);
+    // remove it from Old Parent
+
+    oldParent!.childrens = oldParent!.childrens.filter((child) => {
+      if (typeof child === "string") {
+        return child;
+      }
+      return child.id !== id;
+    });
+
+    const newParent = await this.findComponent(newParentId);
+
+    storeComponentsMap.delete(id);
+    this.storeComponentIntoMap({
+      ...component.data,
+      parentId: newParentId,
+      id: newId,
+    });
+
+    newParent!.childrens = [
+      ...newParent!.childrens,
+      {
+        ...component,
+        data: { ...component.data, parentId: newParentId, id: newId },
+        id: newId,
+      },
+    ];
+
+    return this.completeTreeState;
+  }
+
+  regenerateTree = async () => {
     const allKeys = Array.from(storeComponentsMap.keys());
     const asyncMap = allKeys.map(async (k) => {
       const val = storeComponentsMap.get(k);
 
       if (val) {
-        return await addComponentToTree(
+        return await this.addComponentToTree(
           {
             id: k,
             data: { ...val },
@@ -42,31 +80,54 @@ const treeUtilities = async (completeTree: treeStateType) => {
 
     await Promise.all(asyncMap);
 
-    return componentTree;
+    return this.completeTreeState;
   };
 
-  const addComponentToTree = async (
-    component: newWebStateType,
-    parentId: string
-  ) => {
+  addComponentToTree = async (component: newWebStateType, parentId: string) => {
     const { id } = component;
-    const parentComponent = parentId ? await findComponent(parentId) : null;
+    const parentComponent = parentId
+      ? await this.findComponent(parentId)
+      : null;
     if (!parentComponent) {
-      componentTree[id] = { ...component };
-      storeComponentIntoMap(id, { ...component.data });
-      return componentTree;
+      this.completeTreeState[id] = { ...component };
+      this.storeComponentIntoMap({ ...component.data });
+      return this.completeTreeState;
     }
 
     parentComponent.childrens = [...parentComponent.childrens, component!];
 
-    return componentTree;
+    console.log("this complete state is ", this.completeTreeState);
+
+    return this.completeTreeState;
   };
 
-  const findComponent: (id: string) => Promise<newWebStateType | null> = (
+  deleteComponentFromTree = async (element: renderWebComponentType) => {
+    const { parentId, id } = element;
+    const parentComponent = parentId
+      ? await this.findComponent(parentId)
+      : null;
+    if (!parentComponent) {
+      delete this.completeTreeState[id];
+      return this.completeTreeState;
+    }
+
+    parentComponent.childrens = parentComponent.childrens.filter((child) => {
+      if (typeof child === "string") {
+        return child;
+      }
+      return child.id !== id;
+    });
+
+    console.log("delete state is ", parentComponent);
+
+    return this.completeTreeState;
+  };
+
+  findComponent: (id: string) => Promise<newWebStateType | null> = (
     id: string
   ) => {
     return new Promise((resolve, reject) => {
-      traverseBFS((node: newWebStateType) => {
+      this.traverseBFS((node: newWebStateType) => {
         if (node && node.id === id) {
           return resolve(node);
         }
@@ -76,8 +137,8 @@ const treeUtilities = async (completeTree: treeStateType) => {
     });
   };
 
-  const traverseBFS = (cb: (node: newWebStateType) => void) => {
-    const queue = [componentTree.body];
+  traverseBFS = (cb: (node: newWebStateType) => void) => {
+    const queue = [this.completeTreeState.body];
     while (queue.length) {
       const currentNode = queue.shift();
 
@@ -90,8 +151,6 @@ const treeUtilities = async (completeTree: treeStateType) => {
       }
     }
   };
+}
 
-  return { addComponentToTree, updateComponentMap, regenerateTree };
-};
-
-export { treeUtilities };
+export { TreeOperations };

@@ -1,4 +1,5 @@
 import { atom, selector } from "recoil";
+import { defaultBodyValue } from "../common/enums";
 import { newWebStateType, treeStateType } from "../common/types";
 import { renderWebComponentType } from "../render/types";
 
@@ -10,16 +11,7 @@ import { renderWebComponentType } from "../render/types";
 export const treeState = atom<treeStateType>({
   key: "treeState",
   default: {
-    body: {
-      childrens: [],
-      id: "body",
-      data: {
-        component: "div",
-        id: "body",
-        parentId: "parent",
-        child: "",
-      },
-    },
+    ...defaultBodyValue,
   },
 });
 
