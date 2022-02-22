@@ -24,7 +24,7 @@ class TreeOperations {
     }
   ) {
     const { newParentId, componentNewId: newId } = idsData;
-    console.log("this tree state is ", this.completeTreeState);
+
     // //  storeComponentsMap.set(id, component);
     const { parentId: oldParentId, id } = component.data;
 
@@ -96,7 +96,7 @@ class TreeOperations {
 
     parentComponent.childrens = [...parentComponent.childrens, component!];
 
-    console.log("this complete state is ", this.completeTreeState);
+    this.storeComponentIntoMap({ ...parentComponent.data });
 
     return this.completeTreeState;
   };
@@ -117,8 +117,6 @@ class TreeOperations {
       }
       return child.id !== id;
     });
-
-    console.log("delete state is ", parentComponent);
 
     return this.completeTreeState;
   };

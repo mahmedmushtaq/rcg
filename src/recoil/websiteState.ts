@@ -15,7 +15,12 @@ export const treeState = atom<treeStateType>({
   },
 });
 
-export const webState = atom<newWebStateType | undefined>({
-  key: "webComponentState",
-  default: undefined,
+export const componentsData = atom<{ [key: string]: renderWebComponentType }>({
+  key: "componentDataByKey",
+  default: {},
 });
+
+// export const webState = atom<newWebStateType | undefined>({
+//   key: "webComponentState",
+//   default: undefined,
+// });

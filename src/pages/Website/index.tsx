@@ -3,14 +3,17 @@ import { websitePropsType as PropsType } from "./propType";
 import useToWebsite from "./useToWebsite";
 
 const Website = (props: PropsType) => {
-  const { allElements } = useToWebsite();
+  const { completeTreeState } = useToWebsite();
   console.log(
-    " =================== allElements ================= ",
-    allElements
+    " =================== completeTreeState is ================= ",
+    completeTreeState
   );
   return (
     <div className="">
-      <Render config={allElements} />
+      {Object.keys(completeTreeState).map((key) => {
+        console.log("key is ", completeTreeState[key]);
+        return <Render key={key} config={completeTreeState[key]} />;
+      })}
     </div>
   );
 };

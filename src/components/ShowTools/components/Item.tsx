@@ -22,6 +22,7 @@ const Item = ({ onSelected, tool }: PropType) => {
             id: generateElementUniqueId(tool.element.id),
           },
         });
+        return;
       }}
     >
       <tool.icon size={30} />

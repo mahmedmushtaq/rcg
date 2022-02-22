@@ -1,6 +1,6 @@
 import React from "react";
 import { atom } from "recoil";
-import { elementRefType } from "../common/Tools";
+import { elementRefType, ToolItem } from "../common/Tools";
 import { renderWebComponentType } from "../render/types";
 
 export const selectedElementState = atom<renderWebComponentType | undefined>({
@@ -13,4 +13,9 @@ export const elementRefs = atom<{
 }>({
   key: "elementsRef",
   default: {},
+});
+
+export const toolSelected = atom<ToolItem | undefined>({
+  key: "selectedTool",
+  default: undefined,
 });

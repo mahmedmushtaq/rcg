@@ -1,14 +1,13 @@
-import { ReactElement, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { elementRefType } from "../../common/Tools";
 import { elementRefs, selectedElementState } from "../../recoil";
-import useToGenerateElement from "../../render/hooks/useToGenerateElement";
 import { H2 } from "../UIWidgets";
 import SideBar from "../UIWidgets/SideBar";
 import Selector from "./Components/ShowStyleSelector";
+import useToSelectStyles from "./hooks/useToSelectStyle";
 
 const SelectedItemStyle = () => {
   const [selectedItem, setSelectedItem] = useRecoilState(selectedElementState);
+  const { onChange, selectedValues, setText, text } = useToSelectStyles();
 
   return (
     <SideBar
@@ -18,7 +17,17 @@ const SelectedItemStyle = () => {
       searchOptions={{ search: "", setSearch: () => {} }}
     >
       <div className="mt-2">
-        <Selector />
+        <div>
+          <Selector onChange={onChange} selectedValues={selectedValues} />
+        </div>
+        <div>
+          <input
+            className="p-2 mt-2"
+            placeholder="Enter your text here"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
+          />
+        </div>
       </div>
     </SideBar>
   );

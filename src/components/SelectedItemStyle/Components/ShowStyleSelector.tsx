@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { paddingSizeLists, textSizeList } from "../../../common/tailwind";
+import { dynamicStyleType } from "../../../common/types";
 import { elementRefs, selectedElementState } from "../../../recoil";
 import { Selector } from "../../UIWidgets";
-import useToSelectStyles from "../hooks/useToSelectStyle";
 import { styleList } from "../styleList";
 
-const ShowStyleSelector = () => {
-  const { onChange, selectedValues } = useToSelectStyles();
+interface PropsType {
+  onChange: (id: string, e: React.ChangeEvent<HTMLSelectElement>) => void;
+  selectedValues: dynamicStyleType;
+}
 
+const ShowStyleSelector = ({ onChange, selectedValues }: PropsType) => {
   return (
     <div>
       {styleList.map((style) => (

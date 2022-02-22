@@ -5,7 +5,7 @@ import { ToolItem, tools } from "../../common/Tools";
 const useToShowTools = () => {
   const [allTools, setAllTools] = useState<ToolItem[]>([]);
   const [searchTool, setSearchTool] = useState("");
-  const { onSelectTool } = useToGenerateElement();
+
   useEffect(() => {
     if (!searchTool) {
       setAllTools(tools);
@@ -24,7 +24,6 @@ const useToShowTools = () => {
     allTools,
     searchTool,
     setSearchTool,
-    onSelectTool,
   };
 };
 
