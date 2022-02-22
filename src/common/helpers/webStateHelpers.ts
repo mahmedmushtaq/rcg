@@ -1,5 +1,5 @@
 import { renderWebComponentType } from "../../render/types";
-import { newWebStateType, treeStateType } from "../types";
+import { elementCompleteState, treeStateType } from "../types";
 import { TreeOperations } from "../dsa/StateTreeOperations";
 
 const elFormatToWebStateTypeFormat = (el: renderWebComponentType) => {
@@ -20,25 +20,14 @@ export const addNewElementToWebState = async (
   return { ...newTreeState };
 };
 
-export const onStartDraggingElement = (
-  allTreeState: treeStateType,
-  el: renderWebComponentType
-) => {
-  // remove element from webState
-  const completeTreeStateType = { ...allTreeState };
-};
-
 export const onDropElement = async (
   allTreeState: treeStateType,
-  el: newWebStateType,
-  idsData: {
-    newParentId: string;
-    componentNewId: string;
-  }
+  el: elementCompleteState,
+  newParentId: string
 ) => {
   const operations = new TreeOperations(allTreeState);
 
-  const newTreeState = await operations.updateComponentMap(el, idsData);
+  const newTreeState = await operations.updateComponentMap(el, newParentId);
 
   return newTreeState;
 };

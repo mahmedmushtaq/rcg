@@ -1,16 +1,15 @@
 import { useRecoilValue } from "recoil";
-import { newWebStateType } from "../common/types";
+import { elementCompleteState } from "../common/types";
 import { componentsData } from "../recoil";
 import { renderComponent } from "./core";
-import { renderWebComponentType } from "./types";
 
 interface renderPropType {
-  config?: newWebStateType;
+  config?: elementCompleteState;
 }
 
 const Render = (props: renderPropType) => {
   const allComponentsData = useRecoilValue(componentsData);
-  console.log("allComponentsData is ", allComponentsData);
+
   return (
     <div>
       {props.config &&

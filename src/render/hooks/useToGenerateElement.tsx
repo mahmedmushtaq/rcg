@@ -2,17 +2,13 @@ import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { addNewElementToWebState } from "../../common/helpers";
 import { ToolItem } from "../../common/Tools";
-import { componentsData, toolSelected, treeState } from "../../recoil";
-import useToHandleFunctions from "./useToHandleFunctions";
+import { componentsData, treeState } from "../../recoil";
+import useToHandleFunctions from "./handlers/useToHandleFunctions";
 
 const useToGenerateElement = () => {
   const functionsList = useToHandleFunctions();
   const [allComponentsData, setAllComponentsData] =
     useRecoilState(componentsData);
-
-  const selectedTool = useRecoilValue(toolSelected);
-
-  // const [completeWebState, setWebState] = useRecoilState(webState);
   const [allTreeState, setTreeState] = useRecoilState(treeState);
 
   const onSelectTool = async (tool: ToolItem) => {
@@ -43,12 +39,6 @@ const useToGenerateElement = () => {
 
     // setWebState(newWebState);
   };
-
-  // useEffect(() => {
-  //   if (!selectedTool) return;
-  //   console.log(" ============= tool selected =============== ", selectedTool);
-  //   onSelectTool(selectedTool);
-  // }, [selectedTool]);
 
   return {
     onSelectTool,

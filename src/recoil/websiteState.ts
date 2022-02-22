@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 import { defaultBodyValue } from "../common/enums";
-import { newWebStateType, treeStateType } from "../common/types";
+import { elementCompleteState, treeStateType } from "../common/types";
 import { renderWebComponentType } from "../render/types";
 
 // export const websiteState = atom<webStateType>({
@@ -20,7 +20,7 @@ export const componentsData = atom<{ [key: string]: renderWebComponentType }>({
   default: {},
 });
 
-// export const webState = atom<newWebStateType | undefined>({
+// export const webState = atom<elementCompleteState | undefined>({
 //   key: "webComponentState",
 //   default: undefined,
 // });

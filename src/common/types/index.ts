@@ -4,16 +4,12 @@ export interface dynamicStyleType {
   [key: string]: string;
 }
 
-// export interface webStateType {
-//   [key: string]: renderWebComponentType;
-// }
-
-export interface newWebStateType {
-  childrens: (string | newWebStateType)[];
+export interface elementCompleteState {
+  childrens: (string | elementCompleteState)[];
   data: renderWebComponentType;
   id: string;
 }
 
 export interface treeStateType {
-  [key: string]: newWebStateType;
+  [key: string]: elementCompleteState;
 }

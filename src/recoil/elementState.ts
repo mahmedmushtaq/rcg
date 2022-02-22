@@ -15,7 +15,4 @@ export const elementRefs = atom<{
   default: {},
 });
 
-export const toolSelected = atom<ToolItem | undefined>({
-  key: "selectedTool",
-  default: undefined,
-});
+ 
