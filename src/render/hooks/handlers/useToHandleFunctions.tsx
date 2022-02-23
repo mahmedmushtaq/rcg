@@ -11,11 +11,13 @@ import {
 } from "../../../recoil";
 import { renderWebComponentType } from "../../types";
 import useToHandleDragAndDrop from "./useToHandleDragAndDrop";
+import useToHandlerMouseEnterOrLeave from "./useToHandleMouseEnterOrLeave";
 
 const useToHandleFunctions = () => {
   const [allElementRefs, setElementsRef] = useRecoilState(elementRefs);
   const setSelectedElement = useSetRecoilState(selectedElementState);
   const dragAndDropsFunctionsList = useToHandleDragAndDrop();
+  const mouseEnterAndLeaveFunctionsList = useToHandlerMouseEnterOrLeave();
 
   const addElementRef = (
     id: string,
@@ -25,13 +27,19 @@ const useToHandleFunctions = () => {
     newElsRef[id] = refElement;
     setElementsRef({ ...newElsRef });
   };
+  
 
   const onClick = (completeElState: elementCompleteState) => {
     console.log("onClick occured ", completeElState);
     setSelectedElement(completeElState.data);
   };
 
-  return { onClick, addElementRef, ...dragAndDropsFunctionsList };
+  return {
+    onClick,
+    addElementRef,
+    ...dragAndDropsFunctionsList,
+    ...mouseEnterAndLeaveFunctionsList,
+  };
 };
 
 export default useToHandleFunctions;

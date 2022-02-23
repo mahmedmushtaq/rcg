@@ -7,7 +7,7 @@ import useToSelectStyles from "./hooks/useToSelectStyle";
 
 const SelectedItemStyle = () => {
   const [selectedItem, setSelectedItem] = useRecoilState(selectedElementState);
-  const { onChange, selectedValues, setText, text } = useToSelectStyles();
+  const { selectedValues, onChange, onChangetext, text } = useToSelectStyles();
 
   return (
     <SideBar
@@ -24,7 +24,7 @@ const SelectedItemStyle = () => {
           <input
             className="p-2 mt-2"
             placeholder="Enter your text here"
-            onChange={(e) => setText(e.target.value)}
+            onChange={onChangetext}
             value={text}
           />
         </div>

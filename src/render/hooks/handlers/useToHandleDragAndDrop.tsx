@@ -12,7 +12,8 @@ import {
 import { renderWebComponentType } from "../../types";
 
 const useToHandleDragAndDrop = () => {
-  const allComponentsData = useRecoilValue(componentsData);
+  const [allComponentsData, setAllComponentsData] =
+    useRecoilState(componentsData);
   const [allTreeState, setTreeState] = useRecoilState(treeState);
   const [draggableElement, setDraggableElement] = useState<
     elementCompleteState | undefined
@@ -40,6 +41,10 @@ const useToHandleDragAndDrop = () => {
         onDropParentEl!.id
       );
 
+      setAllComponentsData({
+        ...allComponentsData,
+        [elementData.id]: { ...elementData, parentId: onDropParentEl!.id },
+      });
       setTreeState({ ...newTreeState });
 
       setTimeout(() => {

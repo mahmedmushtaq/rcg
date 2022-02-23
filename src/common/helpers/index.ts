@@ -6,8 +6,9 @@ export * from "./webStateHelpers";
 export const generateElementUniqueId = (originalId: string | number) =>
   originalId + "-" + Math.random();
 
-export const convertClassesToObj = (className: string) => {
+export const convertClassesToObj = (className?: string) => {
   const classesList: { [key: string]: string } = {};
+  if (!className) return "";
   className.split(" ").map((cls) => {
     if (!cls) return "";
     if (cls.includes("-")) {

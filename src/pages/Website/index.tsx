@@ -10,10 +10,9 @@ const Website = (props: PropsType) => {
   );
   return (
     <div className="">
-      {Object.keys(completeTreeState).map((key) => {
-        console.log("key is ", completeTreeState[key]);
-        return <Render key={key} config={completeTreeState[key]} />;
-      })}
+      {Object.keys(completeTreeState).map((key) => (
+        <Render key={key} config={completeTreeState[key]} />
+      ))}
     </div>
   );
 };

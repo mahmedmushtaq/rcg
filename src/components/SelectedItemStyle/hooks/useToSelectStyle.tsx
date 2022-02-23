@@ -10,17 +10,21 @@ import {
   elementRefs,
   selectedElementState,
 } from "../../../recoil";
+import { renderWebComponentType } from "../../../render/types";
 
 const useToSelectStyles = () => {
   const [selectedValues, setSelectedValues] = useState<dynamicStyleType>({});
   const [text, setText] = useState("");
   const originalRef = useRef<HTMLElement>();
+  // this is used to maintain local selectedItem state
+  const [currentSelectedItem, setCurrentSelectedItem] =
+    useState<renderWebComponentType>();
   const [allComponentsData, setAllComponentsData] =
     useRecoilState(componentsData);
 
   const selectedItem = useRecoilValue(selectedElementState);
+
   const allRefs = useRecoilValue(elementRefs);
-  const [currentRef, setCurrentRef] = useState<HTMLElement>();
 
   const onChange = (id: string, e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValuesClone = { ...selectedValues };
@@ -28,45 +32,56 @@ const useToSelectStyles = () => {
     setSelectedValues({ ...selectedValuesClone });
   };
 
+  const updateItem = (
+    property: { className?: string; child?: string } = {}
+  ) => {
+    setCurrentSelectedItem({ ...currentSelectedItem!, ...property });
+  };
+
   useEffect(() => {
     let classesList: dynamicStyleType = {};
+    let childText: string = "";
     if (selectedItem) {
       const thisItem = allComponentsData[selectedItem.id];
       const selectObj = { ...thisItem };
-      selectObj.style = { background: "red" };
-      setAllComponentsData({
-        ...allComponentsData,
-        [thisItem.id]: { ...selectObj },
-      });
-
-      // const ref = allRefs[selectedItem.id];
-      // if (ref) {
-      //   classesList = convertClassesToObj(ref.className);
-      //   setCurrentRef(ref);
-      //   originalRef.current = ref;
-      //   ref.style.background = "red";
-      // }
+      setCurrentSelectedItem(selectObj);
+      classesList = convertClassesToObj(selectObj.className) || {};
+      childText = selectObj.child;
     }
 
     setSelectedValues(classesList);
+    setText(childText);
   }, [selectedItem]);
 
-  useEffect(() => {
-    if (!selectedItem || Object.keys(selectedValues).length === 0) return;
+  console.log(
+    "============== selected item is ============== ",
+    selectedItem,
+    allComponentsData
+  );
 
-    const ref = allRefs[selectedItem.id];
-    if (ref) {
-      ref.className = convertObjToClasses(selectedValues);
-    }
+  useEffect(() => {
+    if (!currentSelectedItem) return;
+    setAllComponentsData({
+      ...allComponentsData,
+      [currentSelectedItem.id]: { ...currentSelectedItem },
+    });
+  }, [currentSelectedItem]);
+
+  useEffect(() => {
+    if (!currentSelectedItem || Object.keys(selectedValues).length === 0)
+      return;
+
+    const className = convertObjToClasses(selectedValues);
+    updateItem({ className });
   }, [selectedValues]);
 
-  useEffect(() => {
-    if (originalRef.current) {
-      //     originalRef.current.innerText = text;
-    }
-  }, [text]);
+  const onChangetext = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const child = e.target.value;
+    setText(child);
+    updateItem({ child });
+  };
 
-  return { onChange, selectedValues, setText, text };
+  return { onChange, onChangetext, text, selectedValues };
 };
 
 export default useToSelectStyles;

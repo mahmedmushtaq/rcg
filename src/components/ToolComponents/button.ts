@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { defaultValues } from "../../common/enums";
+import { defaultValues } from "../../common/defaultvalues";
 import { ToolItem } from "../../common/Tools/types";
 import { renderWebComponentType } from "../../render/types";
 import { ButtonIcon } from "../UIWidgets";
@@ -12,6 +12,7 @@ const button: renderWebComponentType = {
   id: "btn",
   child: "Btn text will come here....",
   parentId: defaultValues.parentId,
+  isHovered: false,
 };
 
 const Button: ToolItem = {

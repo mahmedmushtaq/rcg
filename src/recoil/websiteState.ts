@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { defaultBodyValue } from "../common/enums";
+import { defaultBodyValue } from "../common/defaultvalues";
 import { elementCompleteState, treeStateType } from "../common/types";
 import { renderWebComponentType } from "../render/types";
 

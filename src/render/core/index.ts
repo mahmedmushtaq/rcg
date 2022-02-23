@@ -7,27 +7,34 @@ export const elementList: { [key: string]: any } | undefined = {};
 
 type allComponentsDataType = { [key: string]: renderWebComponentType };
 
-export const renderComponent: (
+type renderComponentFuncType = (
   webState: elementCompleteState,
-  allComponentsData: allComponentsDataType
-) => React.ReactElement = (
+  allComponentsData: allComponentsDataType,
+  currentSelectedItem?: renderWebComponentType
+) => React.ReactElement;
+
+export const renderComponent: renderComponentFuncType = (
   webState: elementCompleteState,
-  allComponentsData: allComponentsDataType
+  allComponentsData: allComponentsDataType,
+  currentSelectedItem?: renderWebComponentType
 ) => {
   // get component data from state
-  const componentDataFromAllComponentsData = allComponentsData[webState.id];
+  const stateData = allComponentsData[webState.id];
 
-  // then if no component data is present in a state then considered the data which is present in default treeState
-  const config =
-    Object.keys(componentDataFromAllComponentsData || {}).length > 0
-      ? componentDataFromAllComponentsData
-      : webState.data;
+  let config = webState.data;
+
+  if (currentSelectedItem && currentSelectedItem.id === webState.id) {
+    // no get data from current selectedItem
+    config = currentSelectedItem;
+  } else if (Object.keys(stateData || {}).length > 0) {
+    config = stateData;
+  }
 
   return createElement(
     config.component,
     {
-      key: config.id,
-      id: config.id,
+      key: config.id + "-" + config.parentId,
+      id: config.id + "-" + config.parentId,
       className: config.className,
       style: config.style,
       draggable: config.draggable,
@@ -35,9 +42,10 @@ export const renderComponent: (
     },
     webState.childrens?.map((child) => {
       if (typeof child === "string") {
-        return child;
+        // here I assumed, string child mean text
+        return config.child;
       }
-      return renderComponent(child, allComponentsData);
+      return renderComponent(child, allComponentsData, currentSelectedItem);
     })
   );
 };

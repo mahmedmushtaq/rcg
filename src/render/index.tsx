@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { elementCompleteState } from "../common/types";
-import { componentsData } from "../recoil";
+import { componentsData, selectedElementState } from "../recoil";
 import { renderComponent } from "./core";
 
 interface renderPropType {
@@ -9,6 +9,7 @@ interface renderPropType {
 
 const Render = (props: renderPropType) => {
   const allComponentsData = useRecoilValue(componentsData);
+  const selectedItem = useRecoilValue(selectedElementState);
 
   return (
     <div>

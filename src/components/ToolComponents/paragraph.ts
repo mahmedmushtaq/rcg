@@ -1,5 +1,5 @@
 import { FileText } from "react-feather";
-import { defaultValues } from "../../common/enums";
+import { defaultValues } from "../../common/defaultvalues";
 import { ToolItem } from "../../common/Tools/types";
 import { renderWebComponentType } from "../../render/types";
 
@@ -12,6 +12,7 @@ const paragraph: renderWebComponentType = {
   parentId: defaultValues.parentId,
   //children: "Write something here....",
   draggable: true,
+  isHovered: false,
 };
 
 const Paragraph: ToolItem = {

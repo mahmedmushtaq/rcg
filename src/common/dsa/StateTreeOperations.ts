@@ -1,7 +1,6 @@
 import { elementCompleteState, treeStateType } from "../types";
 import deepcopy from "deepcopy";
 import { renderWebComponentType } from "../../render/types";
-import { defaultBodyValue } from "../enums";
 
 export const storeComponentsMap = new Map<string, renderWebComponentType>();
 
@@ -25,6 +24,8 @@ class TreeOperations {
     // get old parent
     const oldParent = await this.findComponent(oldParentId);
 
+    console.log("old parent is ", oldParent);
+
     // remove child from old parent
     oldParent!.childrens = oldParent!.childrens.filter((child) => {
       if (typeof child === "string") {
@@ -35,6 +36,8 @@ class TreeOperations {
 
     // find new parent
     const newParent = await this.findComponent(newParentId);
+
+    console.log(" ========== new Parent is ========== ", newParent);
 
     // [skip this if you want] otherwise ===> update parentId of the component in componentMap
     this.storeComponentIntoMap({
